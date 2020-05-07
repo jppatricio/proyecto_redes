@@ -1,0 +1,43 @@
+<nav id="sidebar" [class.active]="classApplied">
+    <div class="custom-menu">
+        <button type="button" (click)="toggleClass()" id="sidebarCollapse" class="btn btn-primary">
+        </button>
+    </div>
+    <div class="img bg-wrap text-center py-4"
+        style="background-image: url(https://alanxelmundo.com/wp-content/uploads/2019/04/biblioteca.jpg);">
+        <div class="user-logo">
+            <div class="img"></div>
+            <h3>Proyecto Final<br>Redes de Datos Seguras</h3>
+
+        </div>
+    </div>
+    <ul class="list-unstyled components mb-5">
+        <div class="text-center py-4">
+
+            <h4>Patricio Jaime Porras</h4>
+
+            <h4>Thomas Alejandro Arias Pelayo</h4>
+
+            <h4>Martin Valdivia</h4>
+
+            <h4>El Otro We Del Equipo</h4>
+
+            <hr class="separator">
+        </div>
+
+        <li (click)="selectedPage = 1" [ngClass]="{'active': selectedPage === 1}">
+            <a [routerLink]="['/inicio']"><span class="fa fa-home mr-3"></span> Home</a>
+        </li>
+        <li (click)="selectedPage = 2" [ngClass]="{'active': selectedPage === 2}">
+            <a [routerLink]="['/subneteo']"><span class="fa fa-connectdevelop mr-3"></span> Subneteo</a>
+        </li>
+        <li (click)="selectedPage = 3" [ngClass]="{'active': selectedPage === 3}">
+            <a [routerLink]="['/sumerizacion']"><span class="fa fa-laptop mr-3"></span> Sumerización</a>
+        </li>
+        <li>
+            <a href="https://github.com/jppatricio/proyecto_redes" target="_blank"><span
+                    class="fa fa-github mr-3"></span> Github</a>
+        </li>
+    </ul>
+
+</nav>
