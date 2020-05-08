@@ -1,0 +1,25 @@
+.card-body{
+    background-color: rgb(44, 44, 44);
+    h5{
+        color: rgb(170, 170, 170);
+    }
+}
+.card{
+    background-color: transparent;
+    img{
+        height: 10vh;
+        margin: 2vw;
+    }
+}
+.card-header{
+    background-color: rgb(66, 66, 66);
+    color: rgb(170, 170, 170);
+    border-radius: calc(.5rem - 1px) calc(.5rem - 1px) 0 0;
+}
+
+
+.card-footer{
+    background-color: rgb(66, 66, 66);
+    color: rgb(170, 170, 170);
+    border-radius: 0 0 calc(.5rem - 1px) calc(.5rem - 1px);
+}

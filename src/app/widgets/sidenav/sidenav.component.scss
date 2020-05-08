@@ -19,7 +19,7 @@
     margin-right: -50px;
 }
 #sidebar.active .btn.btn-primary:before {
-    content: "\f054";
+    content: "\2630";
     font-family: "FontAwesome";
     left: 2px !important;
 }
@@ -82,8 +82,8 @@
     color: #fff;
     &:after {
         float: right;
-          content:" •";
-      }
+        content: " •";
+    }
 }
 #sidebar ul li.active > a:hover {
     background: #2f89fc;
@@ -119,10 +119,10 @@
     }
 }
 #sidebar .custom-menu .btn.btn-primary {
-    background: #2f89fc;
+    background: #050505;
     border-color: transparent;
     position: relative;
-    color: #000;
+    color: rgb(184, 184, 184);
     width: 30px;
     height: 30px;
 }
@@ -134,11 +134,18 @@
     right: 0;
     bottom: 0;
     font-family: "FontAwesome";
-    color: #fff;
+    color: rgb(163, 163, 163);
 }
 #sidebar .custom-menu .btn.btn-primary:after {
     content: "\f053";
     right: 2px;
+}
+
+
+.btn.btn-primary:hover,
+.btn.btn-primary:focus {
+    background: #575757 !important;
+    border-color: #2f89fc !important;
 }
 
 .img {
@@ -158,4 +165,16 @@ h4 {
 hr.separator {
     border-top: 1px solid rgb(73, 73, 73);
     width: 90%;
+}
+
+@media (max-width: 991.98px) {
+    #sidebar .custom-menu .btn.btn-primary:after {
+        content: "\2630";
+        right: 2px;
+    }
+    #sidebar.active .btn.btn-primary:before {
+        content: "\f053";
+        font-family: "FontAwesome";
+        left: 2px !important;
+    }
 }

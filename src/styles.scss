@@ -145,7 +145,7 @@ a.text-primary:hover, a.text-primary:focus {
     font-size: 14px;
     line-height: 1.8;
     font-weight: normal;
-    background: #fff;
+    background: rgb(29, 29, 29);
     color: gray; }
   
   a {
@@ -233,13 +233,6 @@ a.text-primary:hover, a.text-primary:focus {
     -webkit-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s; }
-  
-  .btn.btn-primary {
-    background: #2f89fc;
-    border-color: #2f89fc; }
-    .btn.btn-primary:hover, .btn.btn-primary:focus {
-      background: #2f89fc !important;
-      border-color: #2f89fc !important; }
   
   
   
