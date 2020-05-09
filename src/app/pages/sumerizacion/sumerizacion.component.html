@@ -30,17 +30,50 @@
             <h6>
                 <b>Aprende a sumarizar rutas con tus propios ejemplos</b>
             </h6>
-        </div>
-        <form>
-            <div class="form-group">
-                <div style="display:flex;">
-                    <label for="exampleFormControlInput1">Introuce el número de direcciones IP que deseas
-                        sumarizar</label>
-                    <input type="number" class="form-control" style="margin-left: 5%;width: 20%;"
-                        id="exampleFormControlInput1" placeholder="0">
-                </div>
+            <div>
+                <ol>
+                    <li>Añade todas las direcciones IP que deseas sumarizar</li>
+                    <form [formGroup]="dir" (ngSubmit)="onSubmit(dir.value)">
+                        <label>Añade una nueva IP: <input type="text" formControlName="ip"> <button
+                                type="submit">+</button></label>
+                    </form>
+                    <div #alert class="alert alert-danger alert-dismissible fade" style="position: absolute;"
+                        role="alert">
+                        <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>Ip invalida!</strong> Revisa la dirección IP.
+                    </div>
+                    <p>Lista de direcciones IP:</p>
+                    <ul *ngFor="let obj of direcciones">
+                        <li>
+                            {{obj.ip}}
+                        </li>
+                    </ul>
+                    <button type="submit" (click)="sumariza()">Calcula la sumarización</button>
+                    <div #contigua class="alert alert-danger alert-dismissible fade" style="position: absolute;"
+                        role="alert">
+                        <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>Ip invalidas!</strong> Las direcciones IP que ingresaste no son contiguas.
+                    </div>
+                    <li>Ordenamos las direcciones IP de menor a mayor.</li>
+                    <div class="ordenadas" [ngClass]="{'ordenadasVisible': ordena === true}">
+                        <ol *ngFor="let obj of ordenadas">
+                            <li>
+                                {{obj.ip}}
+                            </li>
+                        </ol>
+                    </div>
+                    <li>Cada dirección se convierte a binario.</li>
+                    <li>Se toma la cadena de bits que es idéntica en todas las direcciones.</li>
+                    <li>Interpretar esta cadena como la dirección IP de la red y su respectiva máscara.</li>
+                </ol>
             </div>
-        </form>
+        </div>
+
+
     </div>
     <div class="card-footer text-muted">
         Facultad de Ingenieria - UNAM - 2020
