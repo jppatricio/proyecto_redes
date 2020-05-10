@@ -34,41 +34,40 @@
                 <ol>
                     <li>Añade todas las direcciones IP que deseas sumarizar</li>
                     <form [formGroup]="dir" (ngSubmit)="onSubmit(dir.value)">
-                        <label>Añade una nueva IP: <input type="text" formControlName="ip"> <button
+                        <label>Añade una nueva IP: <input type="text" formControlName="ip"> </label>
+                        <label>CIDR: <input type="number" formControlName="cidr" min=8 max=30> <button
                                 type="submit">+</button></label>
                     </form>
-                    <div #alert class="alert alert-danger alert-dismissible fade" style="position: absolute;"
-                        role="alert">
-                        <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong>Ip invalida!</strong> Revisa la dirección IP.
-                    </div>
+                    <alert></alert>
                     <p>Lista de direcciones IP:</p>
                     <ul *ngFor="let obj of direcciones">
                         <li>
-                            {{obj.ip}}
+                            {{obj.ip}}/{{obj.cidr}}
                         </li>
                     </ul>
                     <button type="submit" (click)="sumariza()">Calcula la sumarización</button>
-                    <div #contigua class="alert alert-danger alert-dismissible fade" style="position: absolute;"
-                        role="alert">
-                        <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong>Ip invalidas!</strong> Las direcciones IP que ingresaste no son contiguas.
-                    </div>
                     <li>Ordenamos las direcciones IP de menor a mayor.</li>
-                    <div class="ordenadas" [ngClass]="{'ordenadasVisible': ordena === true}">
-                        <ol *ngFor="let obj of ordenadas">
+                    <div class="ordenadas" [ngClass]="{'ordenadasVisible': ordena}">
+                        <ul *ngFor="let obj of ordenadas">
                             <li>
                                 {{obj.ip}}
                             </li>
-                        </ol>
+                        </ul>
                     </div>
                     <li>Cada dirección se convierte a binario.</li>
+                    <div class="ordenadas" [ngClass]="{'ordenadasVisible': ordena}">
+                        <ul *ngFor="let obj of binarios">
+                            <li>
+                                {{obj}}
+                            </li>
+                        </ul>
+                    </div>
                     <li>Se toma la cadena de bits que es idéntica en todas las direcciones.</li>
+                    <b> {{cadena}} </b>
                     <li>Interpretar esta cadena como la dirección IP de la red y su respectiva máscara.</li>
+                    <div class="ordenadas" [ngClass]="{'ordenadasVisible': ordena}">
+                        <b> {{segmento}}/</b> <b>{{mascara}} </b>
+                    </div>
                 </ol>
             </div>
         </div>
