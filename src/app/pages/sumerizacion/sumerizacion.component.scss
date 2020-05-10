@@ -27,3 +27,19 @@
     visibility: visible;
     position: relative;
 }
+.resultado{
+    font-size: larger;
+    color: mistyrose;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.container{
+    display: flex;
+    justify-content: flex-start;
+    margin-left: -10px;
+    align-items: center;
+}
+.container label,input {
+    margin-right: 10px;
+}

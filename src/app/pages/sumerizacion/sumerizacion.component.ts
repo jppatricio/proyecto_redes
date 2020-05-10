@@ -30,7 +30,7 @@ export class SumerizacionComponent implements OnInit {
   onSubmit(data) {
     const ip = data.ip;
     if (!/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ip)) {
-      this.alertService.error('Direccion IP incorrecta', { autoClose: 2.5 });
+      this.alertService.error('Direccion IP incorrecta. Introduce IPv4', { autoClose: 2.5 });
       return;
     }
     if (data.cidr > 30 || data.cidr < 8) {
@@ -64,6 +64,7 @@ export class SumerizacionComponent implements OnInit {
     //let arr = Array(30 - 8 + 1).fill(2).map((n, ix) => n ** (ix + 2));
     if (this.direcciones.length in [0, 1]) {
       this.alertService.error('Añade más direcciones IP', { autoClose: 2.5 });
+      return;
     }
     else {
       this.ordenadas.sort(this.compare);
@@ -71,6 +72,7 @@ export class SumerizacionComponent implements OnInit {
       for (ix = 1; ix < this.direcciones.length; ix++) {
         id = this.ordenadas[ix].id;
         if ((id - temp) !== 1) {
+          this.reset();
           this.alertService.error('Las direcciones IP no son contiguas', { autoClose: 2.5 });
           return;
         }
@@ -126,5 +128,11 @@ export class SumerizacionComponent implements OnInit {
       str += parseInt(bin, 2).toString() + '.';
     }
     this.segmento = str.substr(0, str.length - 1);
+  }
+  reset() {
+    this.ordena = false;
+    this.direcciones.length = 0;
+    this.ordenadas.length = 0;
+    this.binarios.length = 0;
   }
 }

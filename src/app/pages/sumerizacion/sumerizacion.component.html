@@ -33,10 +33,12 @@
             <div>
                 <ol>
                     <li>Añade todas las direcciones IP que deseas sumarizar</li>
-                    <form [formGroup]="dir" (ngSubmit)="onSubmit(dir.value)">
-                        <label>Añade una nueva IP: <input type="text" formControlName="ip"> </label>
-                        <label>CIDR: <input type="number" formControlName="cidr" min=8 max=30> <button
-                                type="submit">+</button></label>
+                    <form class="form-group container" [formGroup]="dir" (ngSubmit)="onSubmit(dir.value)">
+                        <label>IP: <input class="form-control" type="text" formControlName="ip">
+                        </label>
+                        <label>CIDR: <input type="number" class="form-control" formControlName="cidr" min=8 max=30>
+                        </label>
+                        <button type="submit" style="margin-top: 16px;" class="btn btn-success">+</button>
                     </form>
                     <alert></alert>
                     <p>Lista de direcciones IP:</p>
@@ -45,7 +47,10 @@
                             {{obj.ip}}/{{obj.cidr}}
                         </li>
                     </ul>
-                    <button type="submit" (click)="sumariza()">Calcula la sumarización</button>
+                    <div class="container">
+                        <button class="btn btn-success" (click)="sumariza()">Calcula la sumarización</button>
+                        <button (click)="reset()" style="margin-left: 10px;" class="btn btn-danger">reset</button>
+                    </div>
                     <li>Ordenamos las direcciones IP de menor a mayor.</li>
                     <div class="ordenadas" [ngClass]="{'ordenadasVisible': ordena}">
                         <ul *ngFor="let obj of ordenadas">
@@ -63,10 +68,12 @@
                         </ul>
                     </div>
                     <li>Se toma la cadena de bits que es idéntica en todas las direcciones.</li>
-                    <b> {{cadena}} </b>
-                    <li>Interpretar esta cadena como la dirección IP de la red y su respectiva máscara.</li>
                     <div class="ordenadas" [ngClass]="{'ordenadasVisible': ordena}">
-                        <b> {{segmento}}/</b> <b>{{mascara}} </b>
+                        <b> {{cadena}}</b>
+                    </div>
+                    <li>Interpretar esta cadena como la dirección IP de la red y su respectiva máscara.</li>
+                    <div class="ordenadas resultado" [ngClass]="{'ordenadasVisible': ordena}">
+                        Dirección sumarizada: <b style="margin-left: 10px;"> {{segmento}}/{{mascara}}</b>
                     </div>
                 </ol>
             </div>
