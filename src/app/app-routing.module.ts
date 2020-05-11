@@ -7,11 +7,11 @@ import { SumerizacionComponent } from './pages/sumerizacion/sumerizacion.compone
 
 const routes: Routes = [
 
-  { path: 'inicio',             component: InicioComponent },
-  { path: 'subneteo',             component: SubneteoComponent },
-  { path: 'sumerizacion',             component: SumerizacionComponent },
+  { path: 'inicio', component: InicioComponent },
+  { path: 'subneteo', component: SubneteoComponent },
+  { path: 'sumarizacion', component: SumerizacionComponent },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
-  { path: '**', redirectTo: 'inicio'}
+  { path: '**', redirectTo: 'inicio' }
 
 ];
 

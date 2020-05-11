@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { WidgetsModule } from './widgets/widgets.module';
 import { PagesModule } from './pages/pages.module';
 
+
 @NgModule({
   declarations: [
     AppComponent
