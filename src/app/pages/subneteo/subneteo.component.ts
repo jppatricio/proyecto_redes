@@ -19,7 +19,7 @@ export class SubneteoComponent implements OnInit {
   }
 
 //Creación de entradas para número de hosts y subredes
-crearcuadrossubn(event){
+crearcuadrossubn(){
 	var p, inp;
 	var d = document.getElementById("opciones");
 
