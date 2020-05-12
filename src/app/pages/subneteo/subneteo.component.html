@@ -60,7 +60,11 @@
                 </div>
 
                 <div *ngIf="subnet2" class="col-sm-12 col-md-6">
-                    <button class="btn btn-primary" (click)="subneteo()"> Realizar Subneteo </button>
+                    <h5>2.- Ingresa máscara de subred:</h5>
+                    <label>Máscara: <input class="form-control num" type="number" formControlName="mascara"><!--Se agrego nuevo formControlName: mascara-->
+                    </label>
+                    <br>
+                    <button class="btn btn-primary" (click)="subneteo2()"> Realizar Subneteo</button>
                 </div>
 
                 <div *ngIf="showResults" class="col-12 center">

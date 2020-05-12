@@ -20,6 +20,7 @@ export class SubneteoComponent implements OnInit {
 	octetos;
 	subredes;
 	hosts;
+	mascara;
 
   constructor(protected alertService: AlertService) {  }
 
@@ -29,7 +30,9 @@ export class SubneteoComponent implements OnInit {
 		
 		subredes: new FormControl(0),
 		
-		hosts: new FormControl(0)
+		hosts: new FormControl(0),
+
+		mascara: new FormControl(0)
 	  })
   }
 
@@ -107,6 +110,34 @@ subneteo(){
 		this.alertService.error('Error al verificar los datos', { autoClose: 2.5 });
 	}
 }
+
+subneteo2(){
+	var m = this.dirIP.controls.mascara.value;
+
+	var subnet = 'La red se dividió en: ';
+	var dir = this.dirIP.controls.ip.value;
+	var s = Math.pow(2, m-this.clase(this.creaoctetos(dir)))
+	var h = Math.pow(2,32-m)
+
+	console.log("Direccion: " + dir);
+	console.log("Subredes: " + s);
+	console.log("Hosts: " + h);
+
+	this.octetos = this.creaoctetos(dir);
+	this.subredes = this.potencia(s);
+	this.hosts = this.potencia(h);
+	if (this.verifica(this.octetos, this.subredes, this.hosts, s, h)){
+		while (this.clase(this.octetos) + Math.log2(this.subredes) + Math.log2(this.hosts) < 32){
+			this.hosts *= 2;
+		}
+		this.showResults = true;
+		return;
+	}
+	else{
+		this.alertService.error('Error al verificar los datos', { autoClose: 2.5 });
+	}
+}
+
 
 //Obtiene los rangos de direcciones IP
 rangos(octetos, subredes, hosts){
@@ -212,8 +243,10 @@ mascaras(c, n){
 			mm += '.';
 		}
 	}
-	return '\n\nMáscara típica\n'  + this.bindir(mt) + mt + 
-	 'Máscara modificada'  + this.bindir(mm) + '\n' + mm;
+
+	var resultado =  '\n\nMáscara típica\n' + this.bindir(mt) + '\n' + mt + 
+	'\n\nMáscara modificada\n' + this.bindir(mm) + '\n' + mm;
+	return resultado;
 }
 
 //Separa la dirección IP en octetos
