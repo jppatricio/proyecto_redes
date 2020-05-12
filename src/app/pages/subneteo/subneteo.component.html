@@ -7,24 +7,25 @@
             <b>Subneteo</b>
         </h5>
         <h5 class="card-text">
-            <p>El subneteo es ...</p>
-            <b>Ventajas</b>
+            <p>El subneteo es una técnica que permite reducir una red en redes más pequeñas (subredes). El subneteo hace que las redes adquieran una mayor claridad y las subredes creadas funcionan de manera independiente.</p>
+            <b>Características</b>
             <ul>
-                <li>Blah blah blah</li>
-                <li>Blah blah blah</li>
-                <li>Blah blah blah</li>
-                <li>Blah blah blah</li>
+                <li>Todas las subredes tienen el mismo tamaño.</li>
+                <li>La primera dirección representa al segemento y la última dirección representa al broadcast, por lo que sólo se tienen 2<sup>n</sup>-2 direcciones asignables.</li>
+                <li>Se toman prestados bits del ID del host y se emplean para crear una subred.</li>
+                <br><br>
             </ul>
-            <p>Para aplicar este método la direcciones IP deben ser <b>contiguas</b><br>
-                Esta técnica es utilizada por los ISP (Proveedores de servicios de Internet)
-            </p>
+
             <b>Pasos a seguir</b>
             <ol>
-                <li>Blah blah blah</li>
-                <li>Blah blah blah</li>
-                <li>Blah blah blah</li>
-                <li>Blah blah blah</li>
-                <li>Blah blah blah</li>
+                Se toma una dirección cualquiera, por ejemplo: 192.168.10.0/28.
+                Como la dirección IP tiene una máscara por defecto de 24 al ser clase C se necesitan prestarle 4 bits.
+                MM = 24 + 4 = 8. <br>
+                Su máscara modificada sería: 11111111.11111111.11111111.11110000
+                Dejando 4 bits para calular las redes asiganbles. <br>
+                Núm. de subredes: 2 <sup>4</sup> = 16 subredes.
+                Núm. de hosts: 2 <sub>4</sub> = 16 hosts.
+                Pero como la primera dirección se usa para el segmento de red y la última para el broadcast entonces quedamos con 14 subredes y 14 hosts asignables. <br><br>
             </ol>
             <h6>
                 <b>Crea tu propio subneteo con base en una dirección IP a partir de # de subredes y hosts o con la
@@ -64,7 +65,19 @@
 
                 <div *ngIf="showResults" class="col-12 center">
                     <br>
-                    <h6>{{subredes}} subredes con {{hosts}} hosts cada una.</h6>
+                    <!-- <h6>{{subredes}} subredes con {{hosts}} hosts cada una.</h6>    --> 
+                    <p>La red se dividio en {{subredes}} subredes con {{hosts}} hosts cada una.</p>
+                    <p>Por lo tanto existen {{subredes -2}} subredes asignables con {{hosts -2}} hosts asignables cada una.</p>
+                    <p>Dirección IP <br> {{this.direccion(this.segmentodered(this.octetos, this.clase(this.octetos)))}}  <br> {{dirbin(octetos)}}</p>
+                    <p>{{this.mascaras(this.clase(octetos),(subredes))}}</p>
+                    <p>Segmento de red <br> {{this.direccion(this.segmentodered(this.octetos, this.clase(this.octetos)))}} <br> {{this.dirbin(this.segmentodered(this.octetos, this.clase(this.octetos)))}}</p>
+                    <p>Broadcast <br> {{this.direccion(this.broadcast(this.octetos, this.clase(this.octetos)))}} <br> {{this.dirbin(this.broadcast(this.octetos, this.clase(this.octetos)))}}</p>
+                    <p>{{(this.clase(this.octetos))}} Bits ID de Red. <br></p> 
+                    <p>{{showlog(subredes,hosts)}}</p>
+
+                    
+                    <p [innerHTML] = "this.rangos(this.segmentodered(this.octetos, this.clase(this.octetos)), this.subredes, this.hosts)"></p>
+                    <!-- <p>{{this.rangos(this.segmentodered(this.octetos, this.clase(this.octetos)), this.subredes, this.hosts)}}</p>-->
                     <button (click)="reset()" style="width: 100%;" class="btn btn-danger">Resetear</button>
                 </div>
 

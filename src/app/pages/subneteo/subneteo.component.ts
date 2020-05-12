@@ -73,6 +73,7 @@ verifica(octetos, subredes, hosts, s, h){
 
 //Subneteo
 subneteo(){
+	var subnet = 'La red se dividió en: ';
 	var dir = this.dirIP.controls.ip.value;
 	var s = this.dirIP.controls.subredes.value;
 	var h = this.dirIP.controls.hosts.value;
@@ -90,16 +91,16 @@ subneteo(){
 		}
 		this.showResults = true;
 
-		// subnet += subredes.toString() + ' subredes con ' + hosts.toString() + ' hosts cada una.\n';
-		// subnet += 'Por lo tanto, existen ' + (subredes-2).toString() + ' subredes asignables con '+ (hosts-2).toString() + ' hosts asignables cada una.\n\n';
-		// subnet += 'Dirección IP\n' + dir + '\n' + this.dirbin(octetos);
-		// subnet += this.mascaras(this.clase(octetos), Math.log2(subredes));
-		// subnet += '\n\nSegmento de red\n' + this.direccion(this.segmentodered(octetos, this.clase(octetos))) + '\n' + this.dirbin(this.segmentodered(octetos, this.clase(octetos)));
-		// subnet += '\n\nBroadcast\n' + this.direccion(this.broadcast(octetos, this.clase(octetos))) + '\n' + this.dirbin(this.broadcast(octetos, this.clase(octetos))) + '\n\n';
-		// subnet += (this.clase(octetos)).toString() + ' bits ID RED\n'
-		// subnet += (Math.log2(subredes)).toString() + ' bits ID SUBRED\n'
-		// subnet += (Math.log2(hosts)).toString() + ' bits ID HOST\n\n'
-		// subnet += this.rangos(this.segmentodered(octetos, this.clase(octetos)), subredes, hosts);
+		//subnet += this.subredes.toString() + ' subredes con ' + this.hosts.toString() + ' hosts cada una.\n';
+		//subnet += 'Por lo tanto, existen ' + (this.subredes-2).toString() + ' subredes asignables con '+ (this.hosts-2).toString() + ' hosts asignables cada una.\n\n';
+		//subnet += 'Dirección IP\n' + dir + '\n' + this.dirbin(this.octetos);
+		//subnet += this.mascaras(this.clase(this.octetos), Math.log2(this.subredes));
+		//subnet += '\n\nSegmento de red\n' + this.direccion(this.segmentodered(this.octetos, this.clase(this.octetos))) + '\n' + this.dirbin(this.segmentodered(this.octetos, this.clase(this.octetos)));
+		//subnet += '\n\nBroadcast\n' + this.direccion(this.broadcast(this.octetos, this.clase(this.octetos))) + '\n' + this.dirbin(this.broadcast(this.octetos, this.clase(this.octetos))) + '\n\n';
+		//subnet += (this.clase(this.octetos)).toString() + ' bits ID RED\n'
+		//subnet += (Math.log2(this.subredes)).toString() + ' bits ID SUBRED\n'
+		//subnet += (Math.log2(this.hosts)).toString() + ' bits ID HOST\n\n'
+		//subnet += this.rangos(this.segmentodered(this.octetos, this.clase(this.octetos)), this.subredes, this.hosts);
 		return;
 	}
 	else{
@@ -112,18 +113,19 @@ rangos(octetos, subredes, hosts){
 	var rang = 'Rango de subredes: \n', ranga = 'Rango de subredes asignables: \n';
 	for (var i = 0; i < subredes; i++){
 		rang += 'Subred ' + i.toString() + ': ' + this.direccion(this.actualiza(octetos)) + ' - ';
+		rang.replace("\n", "<br>");
 		if (i > 0 && i < subredes - 1){
 			octetos[3]++;
-			ranga += 'Subred asignable ' + i.toString() + ': ' + this.direccion(this.actualiza(octetos)) + ' - ';
+			ranga += 'Subred asignable ' + i.toString() + ': ' + this.direccion(this.actualiza(octetos)) ;
 			octetos[3]--;
 		}
 		for (var j = 1; j < hosts; j++){
 			octetos[3]++;
 		}
-		rang += this.direccion(this.actualiza(octetos)) + '\n';
+		rang += this.direccion(this.actualiza(octetos)) + "<div></div>";//aqui dar el salto
 		octetos[3]--;
 		if (i > 0 && i < subredes - 1){
-			ranga += this.direccion(this.actualiza(octetos)) + '\n';
+			ranga += this.direccion(this.actualiza(octetos)) +  "<div></div>";
 		}
 		octetos[3] += 2;
 	}
@@ -183,6 +185,7 @@ clase(octetos){
 
 //Obtiene la mascara tipica y la mascara modificada
 mascaras(c, n){
+	var n2 = Math.log2(n);
 	var mm = '';
 	var mt = '';
 	for (var i = 0; i < c; i++){
@@ -197,7 +200,7 @@ mascaras(c, n){
 			mt += '.';
 		}
 	}
-	for (var i = 0; i < c + n; i++){
+	for (var i = 0; i < c + n2; i++){
 		mm += '1';
 		if (mm.length == 8 || mm.length == 17 || mm.length == 26){
 			mm += '.';
@@ -209,8 +212,8 @@ mascaras(c, n){
 			mm += '.';
 		}
 	}
-	return '\n\nMáscara típica\n' + this.bindir(mt) + '\n' + mt + 
-	'\n\nMáscara modificada\n' + this.bindir(mm) + '\n' + mm;
+	return '\n\nMáscara típica\n'  + this.bindir(mt) + mt + 
+	 'Máscara modificada'  + this.bindir(mm) + '\n' + mm;
 }
 
 //Separa la dirección IP en octetos
@@ -281,5 +284,27 @@ bindir(binario){
 	return dir.substr(0, dir.length - 1);
 }
 
-reset(){}
+reset(){
+	/* 
+	//Trate de poner estos en falso y que me borrará los valores como me dijo Pato, borraba todos excepto la label de 1.- Insertar dirección IP
+	//Y no me dejaba resetar esta label,tenía que cargar de nuevo la pagina.
+	//Pueden tratar ustedes, descomenten las siguientes lineas de codigo y comenten la funcion window
+	this.subnet1 = false;
+	this.subnet2 = false;
+	this.ipSet =false;
+	this.showResults = false;
+	*/
+
+	//comentar sig. funcion
+	window.location.reload()
+
+}
+
+showlog (subredes,hosts){
+	var bitsRed = Math.log2(subredes)
+	var bitsHosts = Math.log2(hosts)
+	var cadena = bitsRed + " bits ID de subred y " + bitsHosts + " bits ID Hosts";
+	return  cadena;
+
+}
 }
