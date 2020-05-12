@@ -3,20 +3,82 @@
         Ejercicio Subneteo
     </div>
     <div class="card-body">
+        <h5 class="card-title">
+            <b>Subneteo</b>
+        </h5>
         <h5 class="card-text">
-            <p>Insertar dirección IP:<input type="text" id="ip" size="35"></p>
-            <button (click) ="crearcuadrossubn()">  Subneteo a partir de <br> subredes y hosts </button>
-            <button type="button" onclick="crearcuadrossubn2()">  Subneteo a partir de <br> la máscara de subred </button>
-            <div id="opciones">Opciones</div>
-            <div id = "resultado">Resultado</div>
-            <button (click) ="subn()">  Aceptar </button>
-           
+            <p>El subneteo es ...</p>
+            <b>Ventajas</b>
+            <ul>
+                <li>Blah blah blah</li>
+                <li>Blah blah blah</li>
+                <li>Blah blah blah</li>
+                <li>Blah blah blah</li>
+            </ul>
+            <p>Para aplicar este método la direcciones IP deben ser <b>contiguas</b><br>
+                Esta técnica es utilizada por los ISP (Proveedores de servicios de Internet)
+            </p>
+            <b>Pasos a seguir</b>
+            <ol>
+                <li>Blah blah blah</li>
+                <li>Blah blah blah</li>
+                <li>Blah blah blah</li>
+                <li>Blah blah blah</li>
+                <li>Blah blah blah</li>
+            </ol>
+            <h6>
+                <b>Crea tu propio subneteo con base en una dirección IP a partir de # de subredes y hosts o con la
+                    máscara de subred</b>
+            </h6>
+            <form class="form-group" [formGroup]="dirIP">
+                
+            <alert></alert>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 center">
+                        <label>1.- Insertar dirección IP: <input class="form-control" type="text" formControlName="ip">
+                        </label>
+                        <div class="row center">
+                                <button [disabled]="ipSet" class="btn btn-success" (click)="crearcuadrossubn(1)"> Subneteo a partir de <br>
+                                    #subredes y #hosts</button>
+                                <button [disabled]="ipSet" class="btn btn-primary" (click)="crearcuadrossubn(2)"> Subneteo a partir de <br>
+                                    la
+                                    máscara de subred </button>
+                        </div>
+                </div>
+
+
+                <div *ngIf="subnet1" class="col-sm-12 col-md-6 center left-div" >
+                    <h5>2.- Asigna # de subredes y hosts:</h5>
+                    <label>Número de Subredes: <input class="form-control num" type="number" formControlName="subredes">
+                    </label>
+                    <br>
+                    <label>Número de Hosts: <input class="form-control num" type="number" formControlName="hosts">
+                    </label>
+                    <br>
+                    <button class="btn btn-primary" (click)="subneteo()"> Realizar Subneteo </button>
+                </div>
+
+                <div *ngIf="subnet2" class="col-sm-12 col-md-6">
+                    <button class="btn btn-primary" (click)="subneteo()"> Realizar Subneteo </button>
+                </div>
+
+                <div *ngIf="showResults" class="col-12 center">
+                    <br>
+                    <h6>{{subredes}} subredes con {{hosts}} hosts cada una.</h6>
+                    <button (click)="reset()" style="width: 100%;" class="btn btn-danger">Resetear</button>
+                </div>
+
+            </div>
+
+            
+        </form>
+
+
         </h5>
         <br>
+    </div>
+
     <div class="card-footer text-muted">
         Facultad de Ingenieria - UNAM - 2020
     </div>
 </div>
-
-<!--Scripts--> 
-<script src="pages/subneteo/subneteo.component.ts"></script> 

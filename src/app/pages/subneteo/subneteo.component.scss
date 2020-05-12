@@ -1,50 +1,86 @@
-
-
-.card-body{
+.card-body {
     background-color: rgb(44, 44, 44);
-    h5{
+    h5 {
         color: rgb(170, 170, 170);
     }
 }
-.card{
+.card {
     background-color: transparent;
-    img{
+    img {
         height: 10vh;
         margin: 2vw;
     }
 }
-.card-header{
+.card-header {
     background-color: rgb(66, 66, 66);
     color: rgb(170, 170, 170);
-    border-radius: calc(.5rem - 1px) calc(.5rem - 1px) 0 0;
+    border-radius: calc(0.5rem - 1px) calc(0.5rem - 1px) 0 0;
 }
-.card-text{
+.card-text {
     text-align: justify;
 }
-.ordenadas{
-    visibility: hidden;
-    position: absolute;
-}
-.ordenadasVisible{
-    visibility: visible;
-    position: relative;
-}
-.resultado{
-    font-size: larger;
-    color: mistyrose;
-    display: flex;
-    justify-content: flex-start;
-}
 
-.container{
+.container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     margin-left: -10px;
     align-items: center;
 }
-.container label,input {
+.container label,
+input {
     margin-right: 10px;
 }
+
+.card-footer {
+    background-color: rgb(66, 66, 66);
+    color: rgb(170, 170, 170);
+    border-radius: 0 0 calc(0.5rem - 1px) calc(0.5rem - 1px);
+}
+
+.btn {
+    margin: 5px;
+}
+
+.center {
+    text-align: center;
+    justify-content: center;
+}
+
+.num{
+    text-align: center;
+}
+
+.left-div{
+    border-left: 1px solid rgb(110, 110, 110);
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeInLeft;
+    animation-name: fadeInLeft;
+}
+
+
+@keyframes fadeInLeft {
+    0% {
+       opacity: 0;
+       transform: translateX(-100%);
+    }
+    100% {
+       opacity: 1;
+       transform: translateX(0);
+    }
+ } 
+ @keyframes fadeInDown {
+    0% {
+       opacity: 0;
+       transform: translateY(-100%);
+    }
+    100% {
+       opacity: 1;
+       transform: translateY(0);
+    }
+ } 
 
 // *{
 // 	padding: 0px;
@@ -58,7 +94,7 @@
 // 	margin: auto;
 // 	font-size: 20px;
 // 	margin-top: 50px;
-	
+
 // }
 
 // .pantalla{

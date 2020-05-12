@@ -1,91 +1,53 @@
-//subneteo.component.ts
-
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { AlertService } from '../../_alert';
 
 @Component({
   selector: 'app-subneteo',
-  templateUrl: './subneteo.component.html',//código que va a mostrar cada vez que se llame etiqueta app-subneteo
+  templateUrl: './subneteo.component.html',
   styleUrls: ['./subneteo.component.scss']
 })
 
 
 export class SubneteoComponent implements OnInit {
 
-  constructor() { 
-     
-  }
+	subnet1 = false;
+	subnet2 = false;
+	dirIP: FormGroup;
+	ipSet =false;
+	showResults = false;
+
+	octetos;
+	subredes;
+	hosts;
+
+  constructor(protected alertService: AlertService) {  }
 
   ngOnInit(): void {
+	this.dirIP = new FormGroup({
+		ip: new FormControl(''),
+		
+		subredes: new FormControl(0),
+		
+		hosts: new FormControl(0)
+	  })
   }
 
 //Creación de entradas para número de hosts y subredes
-crearcuadrossubn(){
-	var p, inp;
-	var d = document.getElementById("opciones");
-
-	document.getElementById("resultado").innerHTML = '';
-	while (d.hasChildNodes()) {  
-  		d.removeChild(d.firstChild);
-  	} 
-	p = document.createElement("P");
-	p.appendChild(document.createTextNode("Número de subredes asignables: "));
-	p.setAttribute("id", "p0");
-	inp = document.createElement("INPUT");
-  	inp.setAttribute("type", "text");
-  	inp.setAttribute("id", "s");
-  	p.appendChild(inp);
-  	d.appendChild(p);
-  	document.getElementById("p0").style.fontFamily = "Helvetica";
-  	p = document.createElement("P");
-	p.appendChild(document.createTextNode("Número de hosts asignables: "));
-	p.setAttribute("id", "p1");
-	inp = document.createElement("INPUT");
-  	inp.setAttribute("type", "text");
-  	inp.setAttribute("id", "h");
-  	p.appendChild(inp);
-  	d.appendChild(p);
-  	document.getElementById("p1").style.fontFamily = "Helvetica";
-	var boton = document.createElement("BUTTON");
-	boton.setAttribute("onclick", "subn()");
-	boton.appendChild(document.createTextNode("OK"));
-	d.appendChild(boton);
+crearcuadrossubn(selection){
+	if (!/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(this.dirIP.value.ip)) {
+		this.alertService.error('Direccion IP incorrecta. Introduce IPv4', { autoClose: 2.5 });
+		return;
+	}
+	this.dirIP.controls.ip.disable();
+	this.ipSet = true;
+	if(selection == 1){
+		this.subnet1 = true;
+		return
+	}
+	this.subnet2 = true;
+	return
 }
-
-//Creación de entradas para número de hosts y subredes
-crearcuadrossubn2(event){
-	var p, inp;
-	var d = document.getElementById("opciones");
-	document.getElementById("resultado").innerHTML = '';
-	while (d.hasChildNodes()) {  
-  		d.removeChild(d.firstChild);
-  	} 
-	p = document.createElement("P");
-	p.appendChild(document.createTextNode("Máscara de subred: "));
-	p.setAttribute("id", "p0");
-	inp = document.createElement("INPUT");
-  	inp.setAttribute("type", "text");
-  	inp.setAttribute("id", "m");
-  	p.appendChild(inp);
-  	d.appendChild(p);
-  	document.getElementById("p0").style.fontFamily = "Helvetica";
-	var boton = document.createElement("BUTTON");
-	boton.setAttribute("onclick", "subn2()");
-	boton.appendChild(document.createTextNode("Subneteo"));
-	d.appendChild(boton);
-}
-
-//Lectura de datos (usando número de subredes y host)
-subn() {
-	var s = (<HTMLInputElement>document.getElementById("s")).value;
-	var h = (<HTMLInputElement>document.getElementById("h")).value;
-	var ip = (<HTMLInputElement>document.getElementById("ip")).value;
-    document.getElementById("resultado").innerHTML = this.subneteo(ip, parseInt(s)+2, parseInt(h)+2);
-  	//document.getElementById("resultado").innerHTML = this.subneteo(ip, s,h);
-  	document.getElementById("resultado").style.fontFamily = "Helvetica";
-}
-
-
-
 //Verifica los datos
 verifica(octetos, subredes, hosts, s, h){
 	if (this.clase(octetos) == 0 || octetos.length != 4){
@@ -110,29 +72,38 @@ verifica(octetos, subredes, hosts, s, h){
 }
 
 //Subneteo
-subneteo(dir, s, h){
-	var subnet = 'La red se dividió en: ';
-	var octetos = this.creaoctetos(dir);
-	var subredes = this.potencia(s);
-	var hosts = this.potencia(h);
-	if (this.verifica(octetos, subredes, hosts, s, h)){
-		while (this.clase(octetos) + Math.log2(subredes) + Math.log2(hosts) < 32){
-			hosts *= 2;
+subneteo(){
+	var dir = this.dirIP.controls.ip.value;
+	var s = this.dirIP.controls.subredes.value;
+	var h = this.dirIP.controls.hosts.value;
+
+	console.log("Direccion: " + dir);
+	console.log("Subredes: " + s);
+	console.log("Hosts: " + h);
+
+	this.octetos = this.creaoctetos(dir);
+	this.subredes = this.potencia(s);
+	this.hosts = this.potencia(h);
+	if (this.verifica(this.octetos, this.subredes, this.hosts, s, h)){
+		while (this.clase(this.octetos) + Math.log2(this.subredes) + Math.log2(this.hosts) < 32){
+			this.hosts *= 2;
 		}
-		subnet += subredes.toString() + ' subredes con ' + hosts.toString() + ' hosts cada una.\n';
-		subnet += 'Por lo tanto, existen ' + (subredes-2).toString() + ' subredes asignables con '+ (hosts-2).toString() + ' hosts asignables cada una.\n\n';
-		subnet += 'Dirección IP\n' + dir + '\n' + this.dirbin(octetos);
-		subnet += this.mascaras(this.clase(octetos), Math.log2(subredes));
-		subnet += '\n\nSegmento de red\n' + this.direccion(this.segmentodered(octetos, this.clase(octetos))) + '\n' + this.dirbin(this.segmentodered(octetos, this.clase(octetos)));
-		subnet += '\n\nBroadcast\n' + this.direccion(this.broadcast(octetos, this.clase(octetos))) + '\n' + this.dirbin(this.broadcast(octetos, this.clase(octetos))) + '\n\n';
-		subnet += (this.clase(octetos)).toString() + ' bits ID RED\n'
-		subnet += (Math.log2(subredes)).toString() + ' bits ID SUBRED\n'
-		subnet += (Math.log2(hosts)).toString() + ' bits ID HOST\n\n'
-		subnet += this.rangos(this.segmentodered(octetos, this.clase(octetos)), subredes, hosts);
-		return subnet;
+		this.showResults = true;
+
+		// subnet += subredes.toString() + ' subredes con ' + hosts.toString() + ' hosts cada una.\n';
+		// subnet += 'Por lo tanto, existen ' + (subredes-2).toString() + ' subredes asignables con '+ (hosts-2).toString() + ' hosts asignables cada una.\n\n';
+		// subnet += 'Dirección IP\n' + dir + '\n' + this.dirbin(octetos);
+		// subnet += this.mascaras(this.clase(octetos), Math.log2(subredes));
+		// subnet += '\n\nSegmento de red\n' + this.direccion(this.segmentodered(octetos, this.clase(octetos))) + '\n' + this.dirbin(this.segmentodered(octetos, this.clase(octetos)));
+		// subnet += '\n\nBroadcast\n' + this.direccion(this.broadcast(octetos, this.clase(octetos))) + '\n' + this.dirbin(this.broadcast(octetos, this.clase(octetos))) + '\n\n';
+		// subnet += (this.clase(octetos)).toString() + ' bits ID RED\n'
+		// subnet += (Math.log2(subredes)).toString() + ' bits ID SUBRED\n'
+		// subnet += (Math.log2(hosts)).toString() + ' bits ID HOST\n\n'
+		// subnet += this.rangos(this.segmentodered(octetos, this.clase(octetos)), subredes, hosts);
+		return;
 	}
 	else{
-		return '';
+		this.alertService.error('Error al verificar los datos', { autoClose: 2.5 });
 	}
 }
 
@@ -309,4 +280,6 @@ bindir(binario){
 		dir += parseInt(bin[i], 2).toString() + '.';}
 	return dir.substr(0, dir.length - 1);
 }
+
+reset(){}
 }
