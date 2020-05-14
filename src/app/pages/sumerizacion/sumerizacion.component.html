@@ -1,0 +1,87 @@
+<div class="card text-center">
+    <div class="card-header">
+        Sumarización de rutas
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">
+            <b>Superneteo o sumarización de rutas</b>
+        </h5>
+        <div class="card-text">
+            <p>El superneteo es una técnica que permite agrupar múltiples rutas IP contiguas en una única ruta.</p>
+            <b>Ventajas</b>
+            <ul>
+                <li>Reduce el volumen de información de enrutamiento publicado.</li>
+                <li>Reduce la complejidad de las tablas de enrutamiento, reduciendo la cantidad de rutas.</li>
+                <li> Aumenta la estabilidad de las tablas de ruteo.</li>
+                <li>Reduce los requirimientos de procesamiento ya que minimiza los procedimientos de actualización de
+                    rutas y se reduce la cantidad de rutas a evaluar.</li>
+            </ul>
+            <p>Para aplicar este método la direcciones IP deben ser <b>contiguas</b><br>
+                Esta técnica es utilizada por los ISP (Proveedores de servicios de Internet)
+            </p>
+            <b>Pasos a seguir</b>
+            <ol>
+                <li>Verificar que las direcciones IP de las redes sean contiguas.</li>
+                <li>Posteriormente se ordenan de las direcciones IP de menor a mayor.</li>
+                <li>Cada dirección se convierte a binario.</li>
+                <li>Se toma la cadena de bits que es idéntica en todas las direcciones.</li>
+                <li>Interpretar esta cadena como la dirección IP de la red y su respectiva máscara.</li>
+            </ol>
+            <h6>
+                <b>Aprende a sumarizar rutas con tus propios ejemplos</b>
+            </h6>
+            <div>
+                <ol>
+                    <li>Añade todas las direcciones IP que deseas sumarizar</li>
+                    <form class="form-group container" [formGroup]="dir" (ngSubmit)="onSubmit(dir.value)">
+                        <label>IP: <input class="form-control" type="text" formControlName="ip">
+                        </label>
+                        <label>CIDR: <input type="number" class="form-control" formControlName="cidr" min=8 max=30>
+                        </label>
+                        <button type="submit" style="margin-top: 16px;" class="btn btn-success">+</button>
+                    </form>
+                    <alert></alert>
+                    <p>Lista de direcciones IP:</p>
+                    <ul *ngFor="let obj of direcciones">
+                        <li>
+                            {{obj.ip}}/{{obj.cidr}}
+                        </li>
+                    </ul>
+                    <div class="container">
+                        <button class="btn btn-success" (click)="sumariza()">Calcula la sumarización</button>
+                        <button (click)="reset()" style="margin-left: 10px;" class="btn btn-danger">reset</button>
+                    </div>
+                    <li>Ordenamos las direcciones IP de menor a mayor.</li>
+                    <div class="ordenadas" [ngClass]="{'ordenadasVisible': ordena}">
+                        <ul *ngFor="let obj of ordenadas">
+                            <li>
+                                {{obj.ip}}
+                            </li>
+                        </ul>
+                    </div>
+                    <li>Cada dirección se convierte a binario.</li>
+                    <div class="ordenadas" [ngClass]="{'ordenadasVisible': ordena}">
+                        <ul *ngFor="let obj of binarios">
+                            <li>
+                                {{obj}}
+                            </li>
+                        </ul>
+                    </div>
+                    <li>Se toma la cadena de bits que es idéntica en todas las direcciones.</li>
+                    <div class="ordenadas" [ngClass]="{'ordenadasVisible': ordena}">
+                        <b> {{cadena}}</b>
+                    </div>
+                    <li>Interpretar esta cadena como la dirección IP de la red y su respectiva máscara.</li>
+                    <div class="ordenadas resultado" [ngClass]="{'ordenadasVisible': ordena}">
+                        Dirección sumarizada: <b style="margin-left: 10px;"> {{segmento}}/{{mascara}}</b>
+                    </div>
+                </ol>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="card-footer text-muted">
+        Facultad de Ingenieria - UNAM - 2020
+    </div>
+</div>
